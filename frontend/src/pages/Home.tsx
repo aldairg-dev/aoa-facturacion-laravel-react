@@ -6,6 +6,12 @@ import InvoiceMultiStepModal from "../components/PurchasingProcess";
 
 export default function Home() {
   const [openInvoiceModal, setOpenInvoiceModal] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Función para forzar refresco de facturas
+  const handleInvoiceCreated = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-stone-100">
@@ -54,7 +60,7 @@ export default function Home() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-          <InvoiceList />
+          <InvoiceList refreshKey={refreshKey} />
         </div>
       </main>
 
@@ -62,6 +68,7 @@ export default function Home() {
       <InvoiceMultiStepModal
         open={openInvoiceModal}
         onClose={() => setOpenInvoiceModal(false)}
+        onInvoiceCreated={handleInvoiceCreated}
       />
     </div>
   );

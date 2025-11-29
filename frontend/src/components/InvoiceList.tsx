@@ -26,7 +26,11 @@ interface Invoice {
   user: User;
 }
 
-export default function InvoiceList() {
+interface InvoiceListProps {
+  refreshKey?: number;
+}
+
+export default function InvoiceList({ refreshKey }: InvoiceListProps) {
   const [facturas, setFacturas] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +54,7 @@ export default function InvoiceList() {
       }
     };
     fetchFacturas();
-  }, []);
+  }, [refreshKey]);
 
   if (loading)
     return (

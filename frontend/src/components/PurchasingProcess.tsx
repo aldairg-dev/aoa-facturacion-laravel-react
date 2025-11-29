@@ -16,7 +16,7 @@ interface CartProduct {
   nombre: string;
   precio: number;
   cantidad: number;
-  aplicaIva: boolean;
+  aplicaIva: boolean | null;
 }
 
 interface Client {
@@ -29,9 +29,14 @@ interface Client {
 interface Props {
   open: boolean;
   onClose: () => void;
+  onInvoiceCreated?: () => void;
 }
 
-export default function PurchasingProcess({ open, onClose }: Props) {
+export default function PurchasingProcess({
+  open,
+  onClose,
+  onInvoiceCreated,
+}: Props) {
   const [step, setStep] = useState(1);
 
   const [identificacion, setIdentificacion] = useState("");
@@ -114,7 +119,7 @@ export default function PurchasingProcess({ open, onClose }: Props) {
     }
   };
 
-  const agregarProducto = (item: Product, aplicarIva: boolean) => {
+  const agregarProducto = (item: Product) => {
     const existe = productos.find((p) => p.id === item.id);
 
     if (existe) {
@@ -132,18 +137,18 @@ export default function PurchasingProcess({ open, onClose }: Props) {
           nombre: item.product_name,
           precio: parseFloat(item.unit_price),
           cantidad: 1,
-          aplicaIva: aplicarIva,
+          aplicaIva: null,
         },
       ]);
     }
   };
 
-  const toggleIvaProducto = (id: number) => {
-    setProductos(
-      productos.map((p) =>
-        p.id === id ? { ...p, aplicaIva: !p.aplicaIva } : p
-      )
-    );
+  const setIvaProducto = (id: number, aplicaIva: boolean) => {
+    setProductos(productos.map((p) => (p.id === id ? { ...p, aplicaIva } : p)));
+  };
+
+  const todosProductosTienenIva = () => {
+    return productos.every((p) => p.aplicaIva !== null);
   };
 
   const eliminarProducto = (id: number) => {
@@ -168,7 +173,7 @@ export default function PurchasingProcess({ open, onClose }: Props) {
 
   const calcularIVA = () => {
     return productos.reduce((sum, p) => {
-      if (p.aplicaIva) {
+      if (p.aplicaIva === true) {
         return sum + p.precio * p.cantidad * 0.19;
       }
       return sum;
@@ -186,7 +191,7 @@ export default function PurchasingProcess({ open, onClose }: Props) {
     try {
       const payload = {
         client_id: cliente.id,
-        user_id: 1,
+        user_id: 1, // Ajusta según tu sistema de usuarios
         invoice_type: invoiceType,
         details: productos.map((p) => ({
           product_code: p.codigo,
@@ -201,6 +206,9 @@ export default function PurchasingProcess({ open, onClose }: Props) {
 
       if (res.data.success) {
         alert("¡Factura creada exitosamente!");
+        if (typeof onInvoiceCreated === "function") {
+          onInvoiceCreated();
+        }
         handleClose();
       }
     } catch (error) {
@@ -395,9 +403,7 @@ export default function PurchasingProcess({ open, onClose }: Props) {
                         )}
 
                         <button
-                          onClick={() =>
-                            agregarProducto(prod, !!prod.applies_tax)
-                          }
+                          onClick={() => agregarProducto(prod)}
                           className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-sm"
                         >
                           + Agregar
@@ -441,6 +447,27 @@ export default function PurchasingProcess({ open, onClose }: Props) {
                                 +IVA (19%)
                               </span>
                             )}
+                          </div>
+                          <div className="mt-2">
+                            <span className="text-sm mr-2">Aplicar IVA:</span>
+                            <label className="mr-3">
+                              <input
+                                type="radio"
+                                name={`iva-${p.id}`}
+                                checked={p.aplicaIva === true}
+                                onChange={() => setIvaProducto(p.id, true)}
+                              />{" "}
+                              Sí
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name={`iva-${p.id}`}
+                                checked={p.aplicaIva === false}
+                                onChange={() => setIvaProducto(p.id, false)}
+                              />{" "}
+                              No
+                            </label>
                           </div>
                         </div>
 
