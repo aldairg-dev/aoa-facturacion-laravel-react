@@ -1,0 +1,50 @@
+/* Elimina márgenes globales que ya maneja Tailwind */
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left; /* Evita centrar todo por defecto */
+}
+
+/* Estilos opcionales para logos (si los usas) */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  transition: filter 300ms ease;
+}
+
+/* Efecto hover más suave */
+.logo:hover {
+  filter: drop-shadow(0 0 1.2em rgba(0, 0, 0, 0.25));
+}
+
+/* Animación React (opcional) */
+.logo.react:hover {
+  filter: drop-shadow(0 0 1.2em rgba(97, 218, 251, 0.45));
+}
+
+/* Spin opcional, no afecta la UI general */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Clases auxiliares por si las necesitas */
+.card {
+  padding: 1.5em;
+}
+
+/* Texto informativo */
+.read-the-docs {
+  color: #666;
+}

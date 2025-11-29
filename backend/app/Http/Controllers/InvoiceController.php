@@ -17,7 +17,7 @@ class InvoiceController extends Controller
     public function index()
     {
         try {
-            $invoices = Invoice::orderBy('id', 'asc')->get();
+            $invoices = Invoice::with('client', 'user')->orderBy('id', 'asc')->get();
 
             return response()->json([
                 'success' => true,
