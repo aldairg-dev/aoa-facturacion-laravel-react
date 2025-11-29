@@ -24,7 +24,7 @@ Route::prefix('aoa')->group(function () {
     Route::post('/products', [ProductController::class, 'store'])->name('storeProducts');
 
     Route::get('/clients', [ClientController::class, 'index'])->name('getClients');
-    Route::get('/clients/{id}', [ClientController::class, 'show'])->name('getByIdClients');
+    Route::get('/clients/{client_identification}', [ClientController::class, 'show'])->name('getByIdClients');
     Route::post('/clients', [ClientController::class, 'store'])->name('storeClients');
 
     Route::get('/factures', [InvoiceController::class, 'index'])->name('getFactures');
