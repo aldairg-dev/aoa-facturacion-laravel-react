@@ -8,7 +8,6 @@ export default function Home() {
   const [openInvoiceModal, setOpenInvoiceModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // Función para forzar refresco de facturas
   const handleInvoiceCreated = () => {
     setRefreshKey((prev) => prev + 1);
   };

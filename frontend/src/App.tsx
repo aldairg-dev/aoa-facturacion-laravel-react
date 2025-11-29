@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Product from "./pages/Products";
-// import ViewInvoice from "./pages/ViewInvoice";
 
 function App() {
   return (

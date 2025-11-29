@@ -7,7 +7,7 @@ interface Product {
   product_name: string;
   product_code: string;
   unit_price: string;
-  applies_tax: number; // 0 o 1
+  applies_tax: number;
 }
 
 interface CartProduct {
@@ -191,7 +191,7 @@ export default function PurchasingProcess({
     try {
       const payload = {
         client_id: cliente.id,
-        user_id: 1, // Ajusta según tu sistema de usuarios
+        user_id: 1,
         invoice_type: invoiceType,
         details: productos.map((p) => ({
           product_code: p.codigo,
@@ -256,7 +256,6 @@ export default function PurchasingProcess({
           {step === 4 && "4. Confirmar Compra"}
         </h2>
 
-        {/* ===================== PASO 1 ====================== */}
         {step === 1 && (
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -354,7 +353,6 @@ export default function PurchasingProcess({
           </div>
         )}
 
-        {/* ===================== PASO 2 ====================== */}
         {step === 2 && (
           <div>
             <h3 className="text-lg font-semibold text-slate-900 mb-4">
@@ -555,7 +553,6 @@ export default function PurchasingProcess({
           </div>
         )}
 
-        {/* ===================== PASO 3 - MÉTODO DE PAGO ====================== */}
         {step === 3 && (
           <div>
             <div className="space-y-6">
@@ -665,7 +662,6 @@ export default function PurchasingProcess({
           </div>
         )}
 
-        {/* ===================== PASO 4 - CONFIRMAR ====================== */}
         {step === 4 && (
           <div>
             <div className="space-y-6">
