@@ -19,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('aoa')->group(function () {
 
-    Route::get('/products', [ProductController::class, 'index'])->name('getProducts');
-    Route::get('/products/{id}', [ProductController::class, 'show'])->name('getByIdProduct');
-    Route::post('/products', [ProductController::class, 'store'])->name('storeProducts');
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::post('/products', [ProductController::class, 'store']);
 
-    Route::get('/clients', [ClientController::class, 'index'])->name('getClients');
-    Route::get('/clients/{client_identification}', [ClientController::class, 'show'])->name('getByIdClients');
-    Route::post('/clients', [ClientController::class, 'store'])->name('storeClients');
+    Route::get('/clients', [ClientController::class, 'index']);
+    Route::get('/clients/{client}', [ClientController::class, 'show']);
+    Route::post('/clients', [ClientController::class, 'store']);
 
-    Route::get('/factures', [InvoiceController::class, 'index'])->name('getFactures');
-    Route::get('/factures/{id}', [InvoiceController::class, 'show'])->name('getByIdFactures');
-    Route::post('/factures', [InvoiceController::class, 'store'])->name('storeFactures');
+    Route::get('/invoices', [InvoiceController::class, 'index']);
+    Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
+    Route::post('/invoices', [InvoiceController::class, 'store']);
 });

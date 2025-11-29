@@ -17,7 +17,7 @@ class InvoiceController extends Controller
     public function index()
     {
         try {
-            $invoices = Invoice::orderBy('id', 'desc')->get();
+            $invoices = Invoice::orderBy('id', 'asc')->get();
 
             return response()->json([
                 'success' => true,
@@ -121,7 +121,19 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        try {
+            $invoice->load(['invoiceDetails', 'client', 'user']);
+
+            return response()->json([
+                'success' => true,
+                'data'    => $invoice
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener la factura',
+            ], 500);
+        }
     }
 
     /**

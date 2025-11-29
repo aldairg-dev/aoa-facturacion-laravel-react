@@ -65,20 +65,13 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $client_identification)
+    public function show(Client $client)
     {
         try {
-            $client = Client::where('client_identification', $client_identification)->firstOrFail();
-
             return response()->json([
                 'success' => true,
                 'data'    => $client
             ]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Cliente no encontrado',
-            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -87,6 +80,7 @@ class ClientController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Show the form for editing the specified resource.

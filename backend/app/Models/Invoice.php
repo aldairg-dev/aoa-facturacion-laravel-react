@@ -21,6 +21,11 @@ class Invoice extends Model
         'total',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'invoice_number';
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);

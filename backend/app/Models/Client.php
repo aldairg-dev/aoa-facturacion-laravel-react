@@ -15,8 +15,14 @@ class Client extends Model
         'email',
     ];
 
-    public function invoices()
+    public function getRouteKeyName()
     {
+        return 'client_identification';
+    }
+
+
+    public function invoices()
+    {   
         return $this->hasMany(Invoice::class);
     }
 }
